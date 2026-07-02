@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ThemeToggle from "./components/theme-toggle";
+
+// Runs synchronously during HTML parsing, before first paint, so the saved
+// theme (or OS preference) is applied without a flash or hydration mismatch.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +30,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="light"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <header className="flex items-center justify-between border-b border-black/[.08] px-6 py-4 dark:border-white/[.145]">
+          <span className="font-mono text-sm font-semibold tracking-tight text-black dark:text-zinc-50">
+            The Matrix
+          </span>
+          <ThemeToggle />
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
