@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Stopwatch from "../components/stopwatch";
+import { Test } from "../components/test.tsx"
 
 export const metadata: Metadata = {
   title: "Stopwatch",
@@ -13,6 +14,7 @@ export default function StopwatchPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-zinc-50">
           Stopwatch
         </h1>
+        <Test />
         <Stopwatch />
       </main>
     </div>
