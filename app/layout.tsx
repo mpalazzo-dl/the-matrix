@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "./components/theme-toggle";
+import Greeting from "./components/greeting";
 
 // Runs synchronously during HTML parsing, before first paint, so the saved
 // theme (or OS preference) is applied without a flash or hydration mismatch.
@@ -42,7 +43,10 @@ export default function RootLayout({
           <span className="font-mono text-sm font-semibold tracking-tight text-black dark:text-zinc-50">
             The Matrix
           </span>
-          <ThemeToggle />
+          <div className="flex items-center gap-4">
+            <Greeting />
+            <ThemeToggle />
+          </div>
         </header>
         {children}
       </body>
